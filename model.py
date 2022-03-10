@@ -155,7 +155,7 @@ class Model:
 	def forward(self, X, training):
 		self.input_layer.forward(X, training)
 		for layer in self.layers:
-			print(layer.prev.output.shape)
+			#print(layer.prev.output.shape)
 			layer.forward(layer.prev.output, training)
 		return layer.output
 	def backward(self, output, y):

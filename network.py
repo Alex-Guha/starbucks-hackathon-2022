@@ -28,10 +28,13 @@ net.set(loss=Loss_MeanSquaredError(), optimizer=Optimizer_Adam(learning_rate=0.0
 net.finalize()
 net.train(X, y, epochs=10000)
 
-"""
+
 X_test, y_test = generate(1000)
 output = net.forward(X_test)
 plt.plot(X_test, y_test)
 plt.plot(X_test, output)
 plt.show()
-"""
+
+
+# Essentially, in reality, this network is abusing flaws in python's random library, and picking up on it's patterns. However, that's only because we're generating artificial data. With real data, things would be different.
+# As with any AI, data is the most important part, and also the most time consuming. Since we don't have access to the data that Starbucks would have, we had to generate our own.
