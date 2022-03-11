@@ -111,7 +111,7 @@ class Model:
 				prediction_steps += 1
 		output = []
 		for step in range(prediction_steps):
-			if batch_size in None:
+			if batch_size is None:
 				batch_X = X
 			else:
 				batch_X = X[step*batch_size:(step+1)*batch_size]

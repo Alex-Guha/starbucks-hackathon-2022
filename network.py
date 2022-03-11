@@ -13,9 +13,13 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 
 
-X, y = load_data('data_1000')
+X, y = load_data('data_100')
 X = np.array(X)
 y = np.array(y)
+
+X_val, y_val = generate(100, 110)
+X_val = np.array(X)
+y_val = np.array(y)
 
 net = Model()
 
@@ -28,13 +32,4 @@ net.add(Activation_Softmax())
 
 net.set(loss=Loss_CategoricalCrossEntropy(), optimizer=Optimizer_Adam(decay=5e-5), accuracy=Accuracy_Categorical())
 net.finalize()
-net.train(X, y, epochs=1, batch_size=128, print_every=10)
-
-#net.save_parameters('second.model')
-"""
-if __name__ == __main__:
-	while(True):
-
-		confidences = model.predict(X)
-		predictions = model.output_layer_activation.predictions(confidences)
-"""
+net.train(X, y, epochs=1, batch_size=300, print_every=10, validation_data=(X_val, y_val))

@@ -553,11 +553,11 @@ def choose_to_order(iden, day, fav_drink, price, weather, day_of_week, preferred
 
 
 
-def generate(num):
+def generate(start, num):
 	input_data = []
 	output_data = []
 
-	for i in range(num):
+	for i in range(start, num):
 
 		user_fav_drink = rm.choice(drinks)
 		if(i % 11 == 5 or i % 11 == 8):
@@ -623,11 +623,11 @@ def load_data(path):
 		return list(X), list(y)
 
 
-if __name__ == __main__:
-	X, y = generate(1000)
+if __name__ == "__main__":
+	X, y = generate(0, 100)
 
 	#print(X, y)
 
-	save_data('data_1000', X, y)
+	save_data('data_100', X, y)
 
 	#X, y = load_data('test')
