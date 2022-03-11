@@ -2,6 +2,7 @@ import numpy as np
 import math, pickle, copy, time
 from layer import *
 from activation import *
+from activation_loss import *
 from optimizer import *
 from accuracy import *
 from loss import *
@@ -152,10 +153,11 @@ class Model:
 				self.trainable_layers.append(self.layers[i])
 		if self.loss is not None:
 			self.loss.remember_trainable_layers(self.trainable_layers)
+		if isinstance(self.layers[-1], Activation_Softmax) and isinstance(self.loss, Loss_CategoricalCrossEntropy):
+			self.softmax_classifier_output = Activation_Softmax_Loss_CategoricalCrossEntropy()
 	def forward(self, X, training):
 		self.input_layer.forward(X, training)
 		for layer in self.layers:
-			#print(layer.prev.output.shape)
 			layer.forward(layer.prev.output, training)
 		return layer.output
 	def backward(self, output, y):

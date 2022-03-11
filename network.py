@@ -13,28 +13,28 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 
 
-X, y = load_data('data')
+X, y = load_data('data_1000')
+X = np.array(X)
+y = np.array(y)
 
 net = Model()
 
-net.add(Layer_Dense(1, 64))
+net.add(Layer_Dense(6, 64))
 net.add(Activation_ReLU())
 net.add(Layer_Dense(64, 64))
 net.add(Activation_ReLU())
-net.add(Layer_Dense(64, 1))
-net.add(Activation_Linear())
+net.add(Layer_Dense(64, 24))
+net.add(Activation_Softmax())
 
-net.set(loss=Loss_MeanSquaredError(), optimizer=Optimizer_Adam(learning_rate=0.005, decay=1e-3), accuracy=Accuracy_Regression())
+net.set(loss=Loss_CategoricalCrossEntropy(), optimizer=Optimizer_Adam(decay=5e-5), accuracy=Accuracy_Categorical())
 net.finalize()
-net.train(X, y, epochs=10000)
+net.train(X, y, epochs=1, batch_size=128, print_every=10)
 
+#net.save_parameters('second.model')
+"""
+if __name__ == __main__:
+	while(True):
 
-X_test, y_test = generate(1000)
-output = net.forward(X_test)
-plt.plot(X_test, y_test)
-plt.plot(X_test, output)
-plt.show()
-
-
-# Essentially, in reality, this network is abusing flaws in python's random library, and picking up on it's patterns. However, that's only because we're generating artificial data. With real data, things would be different.
-# As with any AI, data is the most important part, and also the most time consuming. Since we don't have access to the data that Starbucks would have, we had to generate our own.
+		confidences = model.predict(X)
+		predictions = model.output_layer_activation.predictions(confidences)
+"""

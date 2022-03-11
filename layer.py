@@ -45,19 +45,3 @@ class Layer_Dense:
 class Layer_Input:
 	def forward(self, inputs, training):
 		self.output = inputs
-
-# Dropout helps mitigate overfitting by preventing memorization, not allowing the network to become too reliant on any particular neuron
-class Layer_Dropout:
-	def __init__(self, rate):
-		self.rate = 1 - rate
-	# Just sets some of the inputs to zero randomly
-	def forward(self, inputs, training):
-		self.inputs = inputs
-		if not training:
-			self.output = inputs.copy()
-			return
-		self.binary_mask = np.random.binomial(1, self.rate, size=inputs.shape) / self.rate
-		self.output = inputs * self.binary_mask
-	# Gradient calculation
-	def backward(self, dvalues):
-		self.dinputs = dvalues * self.binary_mask
